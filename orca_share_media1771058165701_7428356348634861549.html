@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Valentine Choices Interactive</title>
+<style>
+    body {
+        margin: 0;
+        height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background: #ffd9e3;
+        font-family: 'Poppins', sans-serif;
+    }
+    .box {
+        position: relative;
+        width: 380px;
+        padding: 30px;
+        background: #fff;
+        border-radius: 15px;
+        box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+        text-align: center;
+    }
+    .box h2 {
+        font-size: 22px;
+        color: #d94f73;
+        margin-bottom: 20px;
+    }
+    .buttons {
+        display: flex;
+        justify-content: center;
+        gap: 15px;
+        margin-top: 10px;
+    }
+    button {
+        padding: 10px 25px;
+        border: none;
+        border-radius: 20px;
+        font-size: 16px;
+        font-weight: bold;
+        cursor: pointer;
+        transition: 0.2s ease;
+    }
+    .yesBtn {
+        background: #2ec22e;
+        color: white;
+    }
+    .noBtn {
+        background: #eb4d4b;
+        color: white;
+    }
+    .yesBtn:hover { background: #27a227; }
+    .noBtn:hover  { background: #c03939; }
+</style>
+</head>
+<body>
+
+<div class="box" id="box">
+    <h2>Will you be my Valentine sa Monday?</h2>
+
+    <div class="buttons">
+        <button class="yesBtn" id="yesBtn">Yes</button>
+        <button class="noBtn" id="noBtn">No</button>
+    </div>
+</div>
+
+<script>
+const yesBtn = document.getElementById("yesBtn");
+const noBtn  = document.getElementById("noBtn");
+const box = document.getElementById("box");
+
+let yesSize = 16;
+let steps = [
+    "No",
+    "luh ayaw nya?",
+    "wala ganyan sya eh",
+    "kapanget ka bonding",
+    "hala no parin sagot nya",
+    "wala ganyan sya eh",
+    "edi wag!!",
+    "joke lang ikaw naman",
+    "wala fake prend tlaga",
+    "Bahala ka last option natoh bleeehh"
+];
+let index = 0;
+
+function moveNoRandom() {
+    noBtn.style.position = "absolute";
+    const maxX = box.clientWidth - noBtn.offsetWidth - 20;
+    const maxY = box.clientHeight - noBtn.offsetHeight - 20;
+    const randomX = Math.random() * maxX + 10;
+    const randomY = Math.random() * maxY + 50;
+    noBtn.style.left = randomX + "px";
+    noBtn.style.top  = randomY + "px";
+}
+
+noBtn.addEventListener("click", function () {
+    // Palakihin ang YES button
+    yesSize += 4;
+    yesBtn.style.fontSize = yesSize + "px";
+    yesBtn.style.padding = "10px " + (25 + yesSize) + "px";
+
+    // Next text for NO
+    index++;
+    if (index < steps.length) {
+        noBtn.textContent = steps[index];
+        moveNoRandom();
+    } else {
+        // No more NO options → hide the button
+        noBtn.style.display = "none";
+        // Change yes alert text to final YES
+        yesBtn.textContent = "YES";
+    }
+});
+
+yesBtn.addEventListener("click", function () {
+    if (index >= steps.length) {
+        // Remove buttons
+        yesBtn.remove();
+        noBtn.remove();
+
+        // Show final message
+        box.innerHTML = `<h2 style="color:#2ec22e; font-size:28px;">Niceeeee kita kits sa 7/11 after class sagot ko Cornetto mo heheh🍦 💖</h2>`;
+    }
+});
+</script>
+
+</body>
+</html>
